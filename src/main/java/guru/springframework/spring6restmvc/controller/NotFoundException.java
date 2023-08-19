@@ -5,6 +5,7 @@ package guru.springframework.spring6restmvc.controller;
  */
 public class NotFoundException extends RuntimeException {
     public NotFoundException() {
+
     }
 
     public NotFoundException(String message) {
