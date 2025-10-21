@@ -6,7 +6,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import space.springbok.spring6restmvc.model.Beer;
 import space.springbok.spring6restmvc.model.Customer;
 import space.springbok.spring6restmvc.services.CustomerService;
 
@@ -24,6 +23,25 @@ import java.util.UUID;
 public class CustomerController {
 
     private final CustomerService customerService;
+
+    @PatchMapping("/{customerId}")
+    public ResponseEntity updateCustomerPatchById(@PathVariable("customerId") UUID custmerId, @RequestBody Customer customer) {
+        customerService.patchCustomerById(custmerId, customer);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{customerId}")
+    public ResponseEntity deleteById(@PathVariable("customerId") UUID customerId) {
+        customerService.deleteById(customerId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{customerId}")
+    public ResponseEntity updateById(@PathVariable("customerId") UUID customerId, @RequestBody Customer customer) {
+        log.debug("updateById({}, {})", customerId, customer);
+        customerService.updateCustomerById(customerId, customer);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 
     @PostMapping
     public ResponseEntity<Customer> handlePost(@RequestBody Customer customer) {
